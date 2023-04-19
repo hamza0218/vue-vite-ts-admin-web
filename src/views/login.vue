@@ -47,8 +47,8 @@ interface LoginInfo {
 
 const router = useRouter();
 const param = reactive<LoginInfo>({
-	username: 'admin',
-	password: '123123'
+	username: '',
+	password: ''
 });
 
 const rules: FormRules = {
@@ -74,7 +74,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 			localStorage.setItem('ms_keys', JSON.stringify(keys));
 			router.push('/');
 		} else {
-			ElMessage.error('登录成功');
+			ElMessage.error('登录失败');
 			return false;
 		}
 	});
@@ -89,7 +89,7 @@ tags.clearTags();
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-image: url(../assets/img/login-bg.jpg);
+	background-image: url(@/assets/img/login-bg.jpg);
 	background-size: 100%;
 }
 .ms-title {

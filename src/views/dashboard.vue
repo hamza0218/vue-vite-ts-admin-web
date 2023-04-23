@@ -1,6 +1,6 @@
 <template>
 	<div>
-		怎么是个空页面
+		
 	</div>
 </template>
 

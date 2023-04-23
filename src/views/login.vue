@@ -39,6 +39,7 @@ import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
 import { Lock, User } from '@element-plus/icons-vue';
+import {login_ax} from '@/api/index'
 
 interface LoginInfo {
 	username: string;
@@ -67,14 +68,22 @@ const submitForm = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.validate((valid: boolean) => {
 		if (valid) {
-			ElMessage.success('登录成功');
-			localStorage.setItem('ms_username', param.username);
-			const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
-			permiss.handleSet(keys);
-			localStorage.setItem('ms_keys', JSON.stringify(keys));
-			router.push('/');
+      login_ax(param).then((res:any) => {
+        if(res.data.code === '200'){
+          console.log('ElMessage.error(\'登录成功\');', res)
+          ElMessage.success('登录成功');
+          localStorage.setItem('ms_username', param.username);
+          const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
+          permiss.handleSet(keys);
+          localStorage.setItem('ms_keys', JSON.stringify(keys));
+          router.push('/');
+        } else {
+          ElMessage.error(res.data.msg);
+        }
+
+      })
 		} else {
-			ElMessage.error('登录失败');
+			ElMessage.error('登录成功');
 			return false;
 		}
 	});
@@ -89,7 +98,7 @@ tags.clearTags();
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-image: url(@/assets/img/login-bg.jpg);
+	background-image: url(../assets/img/login-bg.jpg);
 	background-size: 100%;
 }
 .ms-title {

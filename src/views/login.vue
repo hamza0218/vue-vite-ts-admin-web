@@ -69,7 +69,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 	formEl.validate((valid: boolean) => {
 		if (valid) {
       login_ax(param).then((res:any) => {
-        if(res.data.code === '200'){
+        if(res.data.code === '0'){
           console.log('ElMessage.error(\'登录成功\');', res)
           ElMessage.success('登录成功');
           localStorage.setItem('ms_username', param.username);

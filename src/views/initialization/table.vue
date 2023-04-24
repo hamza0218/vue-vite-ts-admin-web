@@ -8,7 +8,7 @@
 				</el-select>
 				<el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
 				<el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
-				<el-button type="primary" :icon="Plus">新增</el-button>
+				<el-button type="primary" :icon="Plus" @click="handAdd">新增</el-button>
 			</div>
 			<el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
 				<el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
@@ -64,7 +64,7 @@
 		</div>
 
 		<!-- 编辑弹出框 -->
-		<el-dialog title="编辑" v-model="editVisible" width="30%">
+		<el-dialog :title="dynamicTitle" v-model="editVisible" width="30%">
 			<el-form label-width="70px">
 				<el-form-item label="用户名">
 					<el-input v-model="form.name"></el-input>
@@ -87,7 +87,7 @@
 import { ref, reactive } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue';
-import { fetchData } from '../api/index';
+import { fetchData } from '@/api/index';
 
 interface TableItem {
 	id: number;
@@ -129,25 +129,32 @@ const handlePageChange = (val: number) => {
 // 删除操作
 const handleDelete = (index: number) => {
 	// 二次确认删除
-	ElMessageBox.confirm('确定要删除吗？', '提示', {
-		type: 'warning'
-	})
-		.then(() => {
-			ElMessage.success('删除成功');
-			tableData.value.splice(index, 1);
-		})
-		.catch(() => {});
+	ElMessageBox.confirm('确定要删除吗？', '提示', {type: 'warning'}).then(() => {
+    ElMessage.success('删除成功');
+    tableData.value.splice(index, 1);
+  }).catch(() => {});
 };
 
 // 表格编辑时弹窗和保存
 const editVisible = ref(false);
+const opState = ref('');
+const dynamicTitle = ref('');
 let form = reactive({
 	name: '',
 	address: ''
 });
 let idx: number = -1;
+// 表格新增
+const handAdd = ()=>{
+  form.name = '';
+  form.address = '';
+  dynamicTitle.value = '新增'
+  editVisible.value = true;
+}
+// 表格编辑
 const handleEdit = (index: number, row: any) => {
 	idx = index;
+  dynamicTitle.value = '编辑'
 	form.name = row.name;
 	form.address = row.address;
 	editVisible.value = true;
@@ -158,6 +165,8 @@ const saveEdit = () => {
 	tableData.value[idx].name = form.name;
 	tableData.value[idx].address = form.address;
 };
+
+
 </script>
 
 <style scoped>

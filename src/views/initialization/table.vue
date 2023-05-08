@@ -38,7 +38,6 @@
 						</el-tag>
 					</template>
 				</el-table-column>
-
 				<el-table-column prop="date" label="注册时间"></el-table-column>
 				<el-table-column label="操作" width="220" align="center">
 					<template #default="scope">

@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Default_sidebar: typeof import('./src/components/framework/default_sidebar.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
@@ -44,10 +45,10 @@ declare module '@vue/runtime-core' {
     ElTimePicker: typeof import('element-plus/es')['ElTimePicker']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElUpload: typeof import('element-plus/es')['ElUpload']
-    Header: typeof import('./src/components/header.vue')['default']
+    Header: typeof import('./src/components/framework/header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Sidebar: typeof import('./src/components/sidebar.vue')['default']
-    Tags: typeof import('./src/components/tags.vue')['default']
+    Sidebar: typeof import('./src/components/framework/sidebar.vue')['default']
+    Tags: typeof import('./src/components/framework/tags.vue')['default']
   }
 }

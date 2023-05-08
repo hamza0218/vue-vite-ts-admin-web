@@ -25,7 +25,6 @@
 				<div class="login-btn">
 					<el-button type="primary" @click="submitForm(login)">登录</el-button>
 				</div>
-				<p class="login-tips">Tips : 用户名和密码随便填。</p>
 			</el-form>
 		</div>
 	</div>
@@ -33,8 +32,8 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { useTagsStore } from '../store/tags';
-import { usePermissStore } from '../store/permiss';
+import { useTagsStore } from '@/store/tags';
+import { usePermissStore } from '@/store/permiss';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
@@ -70,7 +69,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
 		if (valid) {
       login_ax(param).then((res:any) => {
         if(res.data.code === '0'){
-          console.log('ElMessage.error(\'登录成功\');', res)
           ElMessage.success('登录成功');
           localStorage.setItem('ms_username', param.username);
           const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
@@ -80,10 +78,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
         } else {
           ElMessage.error(res.data.msg);
         }
-
       })
 		} else {
-			ElMessage.error('登录成功');
+			ElMessage.error('请验证登录信息！');
 			return false;
 		}
 	});
